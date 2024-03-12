@@ -6,7 +6,6 @@ public class PlayAnimations : MonoBehaviour
 {
 
     Animator m_Animator;
-    bool isDancing;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,17 +17,56 @@ public class PlayAnimations : MonoBehaviour
     void Update()
     {
 
-        if(Input.GetKeyDown(KeyCode.D) ){
-            Debug.Log("D is pressed");
-            m_Animator.ResetTrigger("Idle");
-            m_Animator.SetTrigger("Dancing");
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            HandleAnimation(true, "Dancing", null);
+        }
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+            HandleAnimation(false, "Dancing", null);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            HandleAnimation(true, "Jump", null);
 
         }
-        if (Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            Debug.Log("D is released");
+            HandleAnimation(false, "Jump", null);
+        }
+
+        
+        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("Horizontal") > 0)
+        {
+            HandleAnimation(true, "Walk", "WalkR");
+        }
+        else if (Input.GetAxis("Vertical") < 0 || Input.GetAxis("Horizontal") < 0)
+        {
+           // HandleAnimation(true, "WalkR", "Walk");
+            HandleAnimation(true, "Walk", "WalkR");
+        }
+       
+    }
+
+
+    void HandleAnimation(bool startAnimation, string typeAnimation, string reset2ndTrigger)
+    {
+        if (startAnimation)
+        {
+            Debug.Log("Start " + typeAnimation);
+            m_Animator.ResetTrigger("Idle");
+            if (reset2ndTrigger != null) m_Animator.ResetTrigger(reset2ndTrigger);
+            m_Animator.SetTrigger(typeAnimation);
+        }
+        else
+        {
+            Debug.Log("Stop "+ typeAnimation);
             m_Animator.SetTrigger("Idle");
-            m_Animator.ResetTrigger("Dancing");
+            m_Animator.ResetTrigger(typeAnimation);
+            if (reset2ndTrigger != null) m_Animator.ResetTrigger(reset2ndTrigger);
         }
     }
 }
+
+
