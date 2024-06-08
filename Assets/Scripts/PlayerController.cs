@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Key pressed: " + key);
             }
         }
-        Debug.Log(movement);
+       Debug.Log(movement);
     }
 }
 
