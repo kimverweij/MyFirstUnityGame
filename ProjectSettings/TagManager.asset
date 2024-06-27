@@ -7,6 +7,7 @@ TagManager:
   - floor
   - coin
   - girl
+  - rosmerta
   layers:
   - Default
   - TransparentFX
